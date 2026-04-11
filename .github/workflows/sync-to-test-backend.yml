@@ -3,7 +3,7 @@ name: Sync apps2 backend into real test backend
 on:
   push:
     branches:
-      - development
+      - test
 
 jobs:
   sync:
