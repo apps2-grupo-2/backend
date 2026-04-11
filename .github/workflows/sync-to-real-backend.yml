@@ -25,6 +25,7 @@ jobs:
           mkdir -p destination/src/facultad/apps2
 
           rsync -av --delete \
+            --exclude='.git' \
             --exclude='.github' \
             ./ destination/src/facultad/apps2/
 
