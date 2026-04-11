@@ -12,8 +12,12 @@ function getRequired(name) {
 
 function getBoolean(name) {
   const rawValue = process.env[name];
-  const normalizedValue = rawValue.trim().toLowerCase();
 
+  if (rawValue == null) {
+    throw new Error(`Missing environment variable: ${name}`);
+  }
+
+  const normalizedValue = rawValue.trim().toLowerCase();
   // required since when using Boolean() on a non-empty string it will always return true, even for "false"
   if (normalizedValue === 'true') {
     return true;
@@ -28,7 +32,11 @@ function getBoolean(name) {
 
 module.exports = {
   env: {
+    // APP
     port: Number(process.env.PORT),
+
+    // DATABASE
+    dbEnabled: getBoolean('DB_ENABLED'),
     dbHost: getRequired('DB_HOST'),
     dbPort: Number(process.env.DB_PORT),
     dbUser: getRequired('DB_USER'),
@@ -37,6 +45,11 @@ module.exports = {
     dbConnectionLimit: Number(process.env.DB_CONNECTION_LIMIT),
     dbQueueLimit: Number(process.env.DB_QUEUE_LIMIT),
     dbWaitForConnections: getBoolean('DB_WAIT_FOR_CONNECTIONS'),
-    paginationDefaultPageSize: Number(process.env.PAGINATION_DEFAULT_PAGE_SIZE)
+
+    // PAGINATION
+    paginationDefaultPageSize: Number(process.env.PAGINATION_DEFAULT_PAGE_SIZE),
+    
+    // MODULES
+    appointmentsEnabled: getBoolean('APPOINTMENTS_ENABLED')
   }
 };
