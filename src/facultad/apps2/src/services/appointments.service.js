@@ -1,7 +1,7 @@
-const { BadRequestError } = require('@/errors/bad-request-error');
-const { NotFoundError } = require('@/errors/not-found-error');
-const { InternalServerError } = require('@/errors/internal-server-error');
-const { paginationConfig } = require('@/configs/pagination.config');
+const { BadRequestError } = require('@apps2/errors/bad-request-error');
+const { NotFoundError } = require('@apps2/errors/not-found-error');
+const { InternalServerError } = require('@apps2/errors/internal-server-error');
+const { paginationConfig } = require('@apps2/configs/pagination.config');
 
 class AppointmentsService {
     constructor(appointmentsRepository) {

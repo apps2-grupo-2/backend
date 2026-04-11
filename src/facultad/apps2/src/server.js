@@ -1,7 +1,7 @@
 require('module-alias/register');
 const { createApp } = require('../app');
-const { buildDependencies } = require('@/bootstrap');
-const { env } = require('@/configs/env.config');
+const { buildDependencies } = require('@apps2/bootstrap');
+const { env } = require('@apps2/configs/env.config');
 
 if (!env.dbEnabled) {
     console.warn('Database is disabled. Finishing server startup.');

@@ -1,9 +1,9 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const { createAppointmentSchema } = require('@/schemas/create-appointment.schema');
-const { getAppointmentByIdSchema } = require('@/schemas/get-appointment-by-id.schema');
-const { getAppointmentsSchema } = require('@/schemas/get-appointments.schema');
+const { createAppointmentSchema } = require('@apps2/schemas/create-appointment.schema');
+const { getAppointmentByIdSchema } = require('@apps2/schemas/get-appointment-by-id.schema');
+const { getAppointmentsSchema } = require('@apps2/schemas/get-appointments.schema');
 
 test('createAppointmentSchema accepts valid payload', () => {
   const result = createAppointmentSchema.safeParse({

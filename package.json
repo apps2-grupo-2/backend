@@ -4,15 +4,15 @@
   "description": "Medical appointments microservice",
   "private": true,
   "type": "commonjs",
-  "main": "src/server.js",
+  "main": "src/facultad/apps2/src/server.js",
   "scripts": {
-    "dev": "nodemon -r module-alias/register src/server.js",
-    "start": "node -r module-alias/register src/server.js",
+    "dev": "nodemon -r module-alias/register src/facultad/apps2/src/server.js",
+    "start": "node -r module-alias/register src/facultad/apps2/src/server.js",
     "test": "node --test -r module-alias/register"
   },
   "_moduleAliases": {
-    "@": "src",
-    "@test": "tests"
+    "@apps2": "src/facultad/apps2/src",
+    "@apps2Test": "src/facultad/apps2/tests"
   },
   "engines": {
     "node": ">=22"

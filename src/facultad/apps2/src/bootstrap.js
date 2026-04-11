@@ -1,5 +1,5 @@
-const { buildAppointmentsController } = require('@/bootstrap/appointments.bootstrap');
-const { env } = require('@/configs/env.config');
+const { buildAppointmentsController } = require('@apps2/bootstrap/appointments.bootstrap');
+const { env } = require('@apps2/configs/env.config');
 
 function buildDependencies() {
     const dependencies = {};

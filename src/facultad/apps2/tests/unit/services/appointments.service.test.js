@@ -1,11 +1,11 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { env } = require('@/configs/env.config');
+const { env } = require('@apps2/configs/env.config');
 
-const { AppointmentsService } = require('@/services/appointments.service');
-const { BadRequestError } = require('@/errors/bad-request-error');
-const { NotFoundError } = require('@/errors/not-found-error');
-const { InternalServerError } = require('@/errors/internal-server-error');
+const { AppointmentsService } = require('@apps2/services/appointments.service');
+const { BadRequestError } = require('@apps2/errors/bad-request-error');
+const { NotFoundError } = require('@apps2/errors/not-found-error');
+const { InternalServerError } = require('@apps2/errors/internal-server-error');
 
 test('createAppointment throws BadRequestError when starts_at is in the past', async () => {
   const repository = {

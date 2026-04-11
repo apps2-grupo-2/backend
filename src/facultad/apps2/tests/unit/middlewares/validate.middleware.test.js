@@ -2,7 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { z } = require('zod');
 
-const { validate } = require('@/middlewares/validate.middleware');
+const { validate } = require('@apps2/middlewares/validate.middleware');
 
 test('validate calls next and stores parsed data in validatedBody when body is valid', () => {
   const schema = z.object({ id: z.coerce.number().int().positive() });

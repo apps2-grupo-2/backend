@@ -1,6 +1,6 @@
-const { env } = require('@/configs/env.config');
-const { AppointmentsController } = require('@/controllers/appointments.controller');
-const { AppointmentsService } = require('@/services/appointments.service');
+const { env } = require('@apps2/configs/env.config');
+const { AppointmentsController } = require('@apps2/controllers/appointments.controller');
+const { AppointmentsService } = require('@apps2/services/appointments.service');
 
 function buildAppointmentsController() {
     const appointmentsService = new AppointmentsService(buildAppointmentsRepository());
@@ -12,8 +12,8 @@ function buildAppointmentsRepository() {
 }
 
 function buildMySqlRepository() {
-    const { dbPool } = require('@/configs/database.config');
-    const { MySqlAppointmentsRepository } = require('@/repositories/appointments.repository');
+    const { dbPool } = require('@apps2/configs/database.config');
+    const { MySqlAppointmentsRepository } = require('@apps2/repositories/appointments.repository');
     return new MySqlAppointmentsRepository(dbPool);
 }
 
