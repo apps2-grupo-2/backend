@@ -34,4 +34,4 @@ jobs:
             exit 0
           fi
           git commit -m "Sync from apps2-grupo-2/backend@test"
-          git push origin main
+          git push origin test
