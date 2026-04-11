@@ -27,12 +27,12 @@ jobs:
           rsync -av --delete \
             --exclude='.git' \
             --exclude='.github' \
-            ./ destination/src/facultad/apps2/
+            ./src/facultad/apps2/ destination/src/facultad/apps2/
 
       - name: Commit and push changes
         run: |
           cd destination
-          git checkout ${{ github.ref_name }}
+          git checkout ${{ github.ref_name }} || git checkout -b ${{ github.ref_name }} origin/${{ github.ref_name }}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 

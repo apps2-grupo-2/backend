@@ -1,7 +1,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 
-const { AppointmentsController } = require('@/controllers/appointments.controller');
+const { AppointmentsController } = require('@apps2/controllers/appointments.controller');
 
 function createResponseMock() {
   return {
