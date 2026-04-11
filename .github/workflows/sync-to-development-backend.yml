@@ -23,7 +23,7 @@ jobs:
 
           rsync -av --delete \
             --exclude='.github' \
-            ./ destination/src/facultad/apps2/
+            ./src/facultad/apps2/ destination/src/facultad/apps2/
 
       - name: Commit and push changes
         run: |
