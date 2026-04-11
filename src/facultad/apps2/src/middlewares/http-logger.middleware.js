@@ -1,4 +1,4 @@
-const { logger } = require('@/utils/logger.util');
+const { logger } = require('@apps2/utils/logger.util');
 
 function httpLogger(req, res, next) {
   const start = Date.now();

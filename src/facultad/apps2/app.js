@@ -1,9 +1,9 @@
 require('module-alias/register');
 const cors = require('cors');
 const express = require('express');
-const { httpLogger } = require('@/middlewares/http-logger.middleware');
-const { errorHandler } = require('@/middlewares/error-handler.middleware');
-const { AppointmentsRouter } = require('@/routes/appointments.route');
+const { httpLogger } = require('@apps2/middlewares/http-logger.middleware');
+const { errorHandler } = require('@apps2/middlewares/error-handler.middleware');
+const { AppointmentsRouter } = require('@apps2/routes/appointments.route');
 
 function createApp(dependencies) {
     const app = express();
