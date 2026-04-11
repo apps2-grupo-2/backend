@@ -39,4 +39,4 @@ jobs:
           fi
 
           git commit -m "Sync from apps2-grupo-2/backend@production"
-          git push origin main
+          git push origin production
