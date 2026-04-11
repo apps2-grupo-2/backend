@@ -42,4 +42,4 @@ jobs:
           fi
 
           git commit -m "Sync from apps2-grupo-2/backend@${{ github.ref_name }}"
-          git push origin ${{ github.ref_name }}
+          git push origin main
