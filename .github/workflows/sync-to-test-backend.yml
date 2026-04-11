@@ -1,0 +1,37 @@
+name: Sync apps2 backend into real test backend
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+
+      - name: Clone destination repository
+        run: |
+          git clone https://x-access-token:${{ secrets.DEST_REPO_TOKEN }}@github.com/FranciscoSole/backend.git destination
+      - name: Sync files into target folder
+        run: |
+          mkdir -p destination/src/facultad/apps2
+          rsync -av --delete \
+            --exclude='.github' \
+            ./ destination/src/facultad/apps2/
+      - name: Commit and push changes
+        run: |
+          cd destination
+          git checkout test
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Sync from apps2-grupo-2/backend@test"
+          git push origin test
