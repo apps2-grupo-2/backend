@@ -32,7 +32,7 @@ jobs:
       - name: Commit and push changes
         run: |
           cd destination
-          git checkout main || git checkout -b main origin/main
+          git checkout ${{ github.ref_name }} || git checkout -b ${{ github.ref_name }} origin/${{ github.ref_name }}
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
@@ -43,4 +43,4 @@ jobs:
           fi
 
           git commit -m "Sync from apps2-grupo-2/backend@${{ github.ref_name }}"
-          git push origin main
+          git push origin ${{ github.ref_name }}
