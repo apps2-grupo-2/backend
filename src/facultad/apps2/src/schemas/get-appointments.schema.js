@@ -74,7 +74,7 @@ const getAppointmentsSchema = z.object({
     });
   }
 
-  // regla 3: el médico no puede consultar sus turnos como a sí mismo
+  // regla 3: el médico no puede consultar sus turnos como paciente estando como médico y viceversa
   if (data.medic_id && data.patient_id && data.medic_id === data.patient_id) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
