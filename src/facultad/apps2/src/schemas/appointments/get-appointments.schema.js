@@ -1,3 +1,4 @@
+const { only } = require('node:test');
 const { z } = require('zod');
 const dateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
@@ -41,7 +42,17 @@ const getAppointmentsSchema = z.object({
     .int('speciality_id must be an integer')
     .positive('speciality_id must be greater than 0')
     .optional(),
-
+  
+  light_response: z
+    .coerce.number({
+      invalid_type_error: 'light_response must be 0 or 1'
+    })
+    .int('light_response must be 0 or 1')
+    .refine(value => value === 0 || value === 1, {
+      message: 'light_response must be 0 or 1'
+    })
+    .optional(),
+  
   page: z
     .coerce.number({
       invalid_type_error: 'page must be a number'
