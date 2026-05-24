@@ -6,6 +6,8 @@ on:
       - development
       - test
       - production
+  
+  workflow_dispatch:
 
 jobs:
   sync:
