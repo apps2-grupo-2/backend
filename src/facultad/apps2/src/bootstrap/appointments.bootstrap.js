@@ -12,7 +12,11 @@ function mockRequiredDependencies() {
     if (mockConfig.enabled) {
         console.log('Mocking enabled - building required dependencies for appointments service');
         const { buildSpecialitiesController } = require('@apps2/bootstrap/specialities.bootstrap');
-        return { specialitiesService: buildSpecialitiesController().specialitiesService };
+        const { buildMedicalCentersController } = require('@apps2/bootstrap/medical-centers.bootstrap');
+        return {
+            specialitiesService: buildSpecialitiesController().specialitiesService,
+            medicalCentersService: buildMedicalCentersController().medicalCentersService
+        };
     } 
     return {};
 }
@@ -26,7 +30,13 @@ function buildAppointmentsService() {
 }
 
 function buildAppointmentsController() {
-    const appointmentsService = buildAppointmentsService();
+    const dependencies = mockRequiredDependencies();
+    const appointmentsService = new AppointmentsService(
+        buildAppointmentsRepository(),
+        new AppointmentsUtils(), 
+        dependencies.specialitiesService,
+        dependencies.medicalCentersService
+    );
     return new AppointmentsController(appointmentsService);
 }
 

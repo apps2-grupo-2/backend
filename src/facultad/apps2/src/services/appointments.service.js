@@ -8,13 +8,14 @@ const { paginationConfig } = require('@apps2/configs/pagination.config');
 const { mockConfig } = require('@apps2/configs/mock.config');
 
 class AppointmentsService {
-    constructor(appointmentsRepository, appointmentsUtils, notificationsClient, specialitiesService) {
+    constructor(appointmentsRepository, appointmentsUtils, specialitiesService, medicalCentersService) {
         this.appointmentsRepository = appointmentsRepository;
         this.appointmentsUtils = appointmentsUtils;
         this.notificationsClient = notificationsClient;
 
         // just for mocking purposes, to avoid circular dependencies
         this.specialitiesService = specialitiesService;
+        this.medicalCentersService = medicalCentersService;
     }
 
     async createAppointment(data) {
