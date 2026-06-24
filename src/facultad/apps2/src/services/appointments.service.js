@@ -438,7 +438,8 @@ async sendChangeStatusNotification(id, action, webhookPayload = null) {
         
         const checkNotificationUuid = getNotificationOriginalUuid.data.notification_uuid;
 
-        const notificationData = await this.notificationsClient.getNotification(checkNotificationUuid, appointmentId, requestId);
+        const notificationData = await this.notificationsClient.getNotification(checkNotificationUuid, requestId);
+        console.log(`${requestId} - Retrieving notification ${checkNotificationUuid} related to appointment id ${appointmentId} from notifier`);
         if (!notificationData.success)
             throw new InternalServerError('Failed to retrieve original contact data from notification service for appointment id ' + appointmentId);
         
@@ -526,6 +527,17 @@ async sendChangeStatusNotification(id, action, webhookPayload = null) {
         }
 
         return result;
+    }
+
+    async getAppointmentNotificationsById(appointmentId) {
+        const getNotifications = await this.appointmentsRepository.getAppointmentNotificationsById(appointmentId);
+        if (!getNotifications.success)
+            throw new InternalServerError('Failed to retrieve notifications for appointment ID ${appointmentId}. Error: ${getNotifications.errorMessage}');
+        
+        if (!getNotifications.data)
+            throw new InternalServerError('No notifications found for appointment ID ${appointmentId}' + appointmentId);
+        
+        return getNotifications.data;
     }
 }
 
