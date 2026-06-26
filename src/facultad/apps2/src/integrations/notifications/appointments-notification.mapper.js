@@ -8,7 +8,11 @@ function getFormattedTimestamp(){
 }
 
 function getDefaultNotificationTemplate(data, appointmentId, notificationTemplate) {
-    const notificationData = data.data || data; // Handle both cases where data is nested under 'data' or is the root object
+    const notificationItem = Array.isArray(data)
+        ? data.find(item => item.notified_by === "email")
+        : data;
+
+    const notificationData = notificationItem?.data || notificationItem;
 
     return {
         notify_by: 'email',
@@ -31,7 +35,6 @@ function getDefaultNotificationTemplate(data, appointmentId, notificationTemplat
 }
 
 function getDefaultWebhookNotificationTemplate(data, appointmentId, notificationTemplate, url, reason, requestId) {
-    const notificationData = data.data || data;
     console.log(`${requestId} - Webhook notification target URL:`, url);
     return {
         notify_by: 'webhook',
@@ -48,66 +51,80 @@ function getDefaultWebhookNotificationTemplate(data, appointmentId, notification
     };
 }
 
-function generateCreateAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateCreateAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     return notification;
 }
 
-function generateRescheduleAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateRescheduleAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
-    notification.appointment.original_starts_at = data.data.appointment.starts_at;
+    const notificationItem = Array.isArray(data)
+        ? data.find(item => item.notified_by === "email")
+        : data;
+    
+    const notificationOriginalData = notificationItem?.data || notificationItem;
+    
+    notification.appointment.original_starts_at = metadata.previous_starts_at;
+    notification.appointment.starts_at = metadata.new_starts_at;
 
     return notification
 }
 
-function generateCancelAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateCancelAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     notification.appointment.cancelled_at = getFormattedTimestamp();
 
     return notification;
 }
 
-function generateConfirmAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateConfirmAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     notification.appointment.confirmed_at = getFormattedTimestamp();
 
     return notification;
 }
 
-function generateCheckInAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateCheckInAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     notification.appointment.checked_in_at = getFormattedTimestamp();
 
     return notification;
 }
 
-function generateFinishAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateFinishAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     notification.appointment.finished_at = getFormattedTimestamp();
 
     return notification;
 }
 
-function generateExpiredAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateExpiredAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     notification.appointment.expired_at = getFormattedTimestamp();
 
     return notification;
 }
 
-function generateReminderAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateReminderAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     return notification;
 }
 
-function generateAbsentAppointmentNotification(data, appointmentId, notificationTemplate) {
+function generateAbsentAppointmentNotification(data, appointmentId, notificationTemplate, metadata) {
     const notification = getDefaultNotificationTemplate(data, appointmentId, notificationTemplate);
     return notification;
 }
 
 function generateOperationsRoomWebhookNotification(data, appointmentId, notificationTemplate, reason, metadata, requestId) {
     const url = process.env.OPERATING_ROOM_WEBHOOK_URL || 'https://webhook.site/a9b2fece-53f8-4fb0-bf1e-b350a862f99a';
-    const notificationOriginalData = data.data;
+    // const notificationOriginalData = data.data;
+    
+    const notificationItem = Array.isArray(data)
+        ? data.find(item => item.notified_by === "email")
+        : data;
+
+    const notificationOriginalData = notificationItem?.data || notificationItem;
+    
     const notification = getDefaultWebhookNotificationTemplate(notificationOriginalData, appointmentId, notificationTemplate, url, reason, requestId);
     
     notification.request.body.appointment = {
@@ -130,7 +147,13 @@ function generateOperationsRoomWebhookNotification(data, appointmentId, notifica
 
 function generateHighComplexityWebhookNotification(data, appointmentId, notificationTemplate, reason, metadata, requestId) {
     const url = process.env.HIGH_COMPLEXITY_WEBHOOK_URL || 'https://webhook.site/a9b2fece-53f8-4fb0-bf1e-b350a862f99a';
-    const notificationOriginalData = data.data;
+    // const notificationOriginalData = data.data;
+    
+    const notificationItem = Array.isArray(data)
+        ? data.find(item => item.notified_by === "email")
+        : data;
+
+    const notificationOriginalData = notificationItem?.data || notificationItem;
     const notification = getDefaultWebhookNotificationTemplate(data, appointmentId, notificationTemplate, url, reason, requestId);
 
     notification.request.body.appointment = {
@@ -149,7 +172,13 @@ function generateHighComplexityWebhookNotification(data, appointmentId, notifica
 
 function generateCheckInWebhookNotification(data, appointmentId, notificationTemplate, reason, metadata, requestId) {
     const url = process.env.CHECK_IN_WEBHOOK_URL || 'https://webhook.site/a9b2fece-53f8-4fb0-bf1e-b350a862f99a';
-    const notificationOriginalData = data.data;
+    // const notificationOriginalData = data.data;
+    
+    const notificationItem = Array.isArray(data)
+        ? data.find(item => item.notified_by === "email")
+        : data;
+
+    const notificationOriginalData = notificationItem?.data || notificationItem;
     const notification = getDefaultWebhookNotificationTemplate(data, appointmentId, notificationTemplate, url, reason, requestId);
 
     notification.request.body.appointment = {
